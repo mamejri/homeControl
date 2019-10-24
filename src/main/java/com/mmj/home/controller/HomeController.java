@@ -79,7 +79,7 @@ public class HomeController {
     @RequestMapping("/OffRelay1")
     public String turnOffRelay1() throws IOException {
         if (piFace != null) {
-            piFace.getRelay(PiFaceRelay.K0).close();
+            piFace.getRelay(PiFaceRelay.K0).open();
             return "Relay1 On :" + piFace.getRelay(PiFaceRelay.K0).isOpen();
         } else {
             return "Interface PiFace not connected";
