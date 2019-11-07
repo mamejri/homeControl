@@ -30,16 +30,26 @@ public class HomeController {
     static {
         try {
             piFace = new PiFaceDevice(PiFace.DEFAULT_ADDRESS, SpiChannel.CS0);
-        } catch (IOException e) {
+        } catch (UnsatisfiedLinkError | IllegalArgumentException | IOException e) {
             System.out.print("Check the connectivity of your PiFace");
         }
     }
 
-    @RequestMapping("/")
+    /**
+     * Home page
+     *
+     * @return greating message
+     */
+    @RequestMapping("/home")
     public String greating() {
-        return "Hello world!";
+        return "Control your Home !";
     }
 
+    /**
+     * Change the state of the LED connected to the GPIO_01
+     *
+     * @return OK if there is no exception
+     */
     @RequestMapping("/light")
     public String light() {
         if (gpioPinDigitalOutput == null) {
@@ -56,6 +66,12 @@ public class HomeController {
         return "OK";
     }
 
+    /**
+     * Open the Relay with inedx 0 in the PiFace
+     *
+     * @return String of the state of the Relay if there is no exception
+     * @throws IOException exception if Relay not found
+     */
     @RequestMapping("/OnRelay1")
     public String turnOnRelay1() throws IOException {
         if (piFace != null) {
@@ -66,6 +82,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Open the Relay with inedx 1 in the PiFace
+     *
+     * @return String of the state of the Relay if there is no exception
+     * @throws IOException exception if Relay not found
+     */
     @RequestMapping("/OnRelay2")
     public String turnOnRelay2() throws IOException {
         if (piFace != null) {
@@ -76,6 +98,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Close the Relay with inedx 0 in the PiFace
+     *
+     * @return String of the state of the Relay if there is no exception
+     * @throws IOException exception if Relay not found
+     */
     @RequestMapping("/OffRelay1")
     public String turnOffRelay1() throws IOException {
         if (piFace != null) {
@@ -86,6 +114,12 @@ public class HomeController {
         }
     }
 
+    /**
+     * Close the Relay with inedx 1 in the PiFace
+     *
+     * @return String of the state of the Relay if there is no exception
+     * @throws IOException exception if Relay not found
+     */
     @RequestMapping("/OffRelay2")
     public String turnOffRelay2() throws IOException {
         if (piFace != null) {
